@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title> Soccer Physics </title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+        }
+        body {
+            color: #2a324b;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e1e5ee;
+        }
+        canvas {
+            border: 2px solid #A4DDD8;
+            background-color: #fbfcff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    <script type="text/javascript">
+
+            const canvas = document.getElementById("c");
+            const ctx = canvas.getContext("2d");
+            const W = 900;
+            const H = 600;
+            const FPS = 30;
+            const _DEBUG = false;
+            const floor = 3*H/4;
+            const len_ball = 128;
+            const h_net = 400;
+            const w_net = 180;
+
+            const sprites = new Image();
+            sprites.src = "images/ball.jpg";
+            const netImage = new Image();
+            netImage.src = "images/net-left.jpg";
+            const net2Image = new Image();
+            net2Image.src = "images/net-right.jpg";
+
+            let keys = {};
+
+            let ball = {
+                x: (W-len_ball)/2,
+                y: floor
+            };
+
+            let game = "game";
+
+            function documentation() {
+
+                document.onkeydown = function keydown(e) {
+                    if(!e.isTrusted) return;
+                    keys[e.key] = true;
+                }
+
+                document.onkeyup = function keyup(e) {
+                    if(!e.isTrusted) return;
+                    keys[e.key] = false;
+                }
+
+            }
+
+            function init() {
+                documentation();
+                canvas.width = W;
+                canvas.height = H;
+                ctx.mozImageSmoothingEnabled = false;
+                ctx.webkitImageSmoothingEnabled = false;
+                ctx.msImageSmoothingEnabled = false;
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(sprites,ball.x,ball.y);
+                //ctx.drawImage(playerImage,player1.x,player1.y);
+                //ctx.drawImage(playerImage,player2.x,player2.y);
+
+                loop();
+            }
+
+
+            function update() {
+
+              }
+
+            function draw() {
+
+                ctx.fillStyle = "#111";
+                ctx.scale(0.5,0.5);
+                ctx.drawImage(sprites,2*ball.x+len_ball/2,2*(ball.y-len_ball/2));
+                ctx.drawImage(netImage,0,2*floor-h_net);
+                ctx.drawImage(net2Image,2*(W-w_net/2),2*floor-h_net);
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+            }
+
+            function loop() {
+                ctx.fillStyle = "#6FD683";
+                ctx.fillRect(0, 0, W, H);
+                ctx.fillStyle = "#AEE4E4";
+                ctx.fillRect(0, 0, W, floor-3);
+                update();
+                draw();
+                requestAnimationFrame(loop);
+
+              }
+
+
+            init();
+
+
+    </script>
+</body>
+</html>
