@@ -36,9 +36,6 @@
             const FPS = 30;
             const _DEBUG = false;
             const floor = 3*H/4;
-            const len_ball = 128;
-            const h_net = 400;
-            const w_net = 180;
 
             const sprites = new Image();
             sprites.src = "images/ball.png";
@@ -52,8 +49,14 @@
             let ball = {
                 x: 3*((W-len_ball)/2)+len_ball,
                 y: (floor-len_ball/3),
-                floor: 3*(floor-len_ball/3)
+                floor: 3*(floor-len_ball/3),
+                len: 128;
             };
+
+            let net = {
+                h: 400,
+                w = 180
+            }
 
             let t = 1;
             let game = "game";
@@ -86,7 +89,6 @@
 
             function ball_gravity() {
                 if(ball.y < ball.floor) return true;
-                ctx.fillStyle = "#111";
                 return false;
             }
 
