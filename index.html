@@ -51,7 +51,8 @@
                 len: ball_len,
                 x: 3*((W-ball_len)/2)+ball_len,
                 y: floor-ball_len/3,
-                floor: 3*(floor-ball_len/3)
+                floor: 3*(floor-ball_len/3),
+                speed: 10
             };
 
             let net = {
@@ -93,6 +94,14 @@
                 return false;
             }
 
+            function check_goal() {
+                //console.log(ball.x);
+                if(ball.x > 2400)
+                    ctx.fillText("Gollllll", 50, 100);
+                if(ball.x < net.w)
+                    ctx.fillText("gol na esquerda viado", 100, 100);
+            }
+
             function update() {
 
                 if (ball_gravity()) {
@@ -100,6 +109,14 @@
                     t++;
                 }
                 else t = 1;
+
+                if(keys.d || keys['ArrowRight']) {
+                    ball.x += ball.speed;
+                } else
+                if(keys.a || keys['ArrowLeft']) {
+                    ball.x -= ball.speed;
+                }
+                check_goal()
               }
 
             function draw() {
